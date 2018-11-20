@@ -1,0 +1,141 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<style>
+
+.functionscreen {
+  border: 5px;
+  border-radius: 25px;
+  border-style: solid;
+  border-color: black;
+  min-height: 70vh;
+  display: flex;
+  margin: 0 auto;
+  overflow: scroll;
+  text-align: center;
+  align-items: center;
+}
+.function {
+  height: 30px;
+  border-color: black;
+  border-radius: 5px;
+  border-style: solid;
+  background-color: white;
+  margin: 25px;
+  padding: 20px 20px 10px 20px;
+  float: left;
+  text-align: center;
+}
+
+.argument {
+  min-height: 40px;
+  background-color: white;
+  border-color: black;
+  border-radius: 5px;
+  border-style: solid;
+  margin: 25px;
+  padding: 20px 20px 10px 20px;
+  float: left;
+}
+
+</style>
+
+<script>
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
+function drag(ev) {
+  ev.dataTransfer.setData("function", ev.target.id);
+}
+//function to reload the function screen
+function reload(){
+    var container = document.getElementById("yourDiv");
+    var content = container.innerHTML;
+    container.innerHTML= ""; 
+}
+
+function drop(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("function");
+  //ev.target.appendChild(document.getElementById(data));
+  var div = document.getElementById(data);
+  clone = div.cloneNode(true);
+
+
+  if (ev.target.id != 'fixed') {
+//not a clean method -- can also be done with classname
+    switch (div.id) {
+//cases to identify function and drop accordingly
+      case 'add':
+        ev.target.appendChild(clone);
+        var arg1 = document.createElement("DIV");
+        arg1.className = "argument";
+// arg1.setAttribute("style", "min-width: 0px");
+        var arg2 = document.createElement("DIV");
+        arg2.className = "argument";
+        ev.target.appendChild(arg1);
+        ev.target.appendChild(arg2);
+        clone.id = 'fixed';
+//marking existing function nodes with id = fixed to avoid re dragging
+        break;
+        
+      case 'subtract':
+        ev.target.appendChild(clone);
+        var arg1 = document.createElement("DIV");
+        arg1.className = "argument";
+        var arg2 = document.createElement("DIV");
+        arg2.className = "argument";
+        ev.target.appendChild(arg1);
+        ev.target.appendChild(arg2);
+        clone.id = 'fixed';
+        break;
+        
+      case 'foo':
+        ev.target.appendChild(clone);
+        var arg1 = document.createElement("DIV");
+        arg1.className = "argument";
+        var arg2 = document.createElement("DIV");
+        arg2.className = "argument";
+        var arg3 = document.createElement("DIV");
+        arg3.className = "argument";
+        ev.target.appendChild(arg1);
+        ev.target.appendChild(arg2);
+        ev.target.appendChild(arg3);
+        clone.id = 'fixed';
+        break;
+        
+      case 'doSomethingComplicated':
+        ev.target.appendChild(clone);
+        var arg1 = document.createElement("DIV");
+        arg1.className = "argument";
+        ev.target.appendChild(arg1);
+        clone.id = 'fixed';
+        break;
+    }
+  }
+}
+</script>
+</head>
+<body>
+<div>
+  <div id="yourDiv" class="functionscreen" ondrop="drop(event)" ondragover="allowDrop(event)">	     </div>
+</div>
+<br>
+<br>
+	<div id="add" class="function" draggable="true" ondragstart="drag(event)">
+  		add
+	</div>
+	<div id="subtract" class="function" draggable="true" ondragstart="drag(event)">
+ 		subtract
+	</div>
+	<div id="foo" class="function" draggable="true" ondragstart="drag(event)">
+  		foo
+	</div>
+	<div id="doSomethingComplicated" class="function" draggable="true" ondragstart="drag(event)">
+  		doSomethingComplicated
+	</div>
+	
+    <a href="javascript: reload()">Click to Reload</a>
+</body>
+</html>
